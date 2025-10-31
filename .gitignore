@@ -29,7 +29,7 @@ Thumbs.db
 .env
 .env.*
 !.env.example
-.git_credentials
+.git-credentials
 *.pem
 *.key
 *.crt
@@ -51,6 +51,7 @@ jest-stare/
 # Prisma
 prisma/migrations/dev.db-journal
 dev.db
+backend/src/generated/prisma/
 
 # SQLite (if used locally)
 *.sqlite
