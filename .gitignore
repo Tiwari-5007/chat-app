@@ -1,32 +1,99 @@
-# Node modules
+# =========================================================
+# 🧠 GLOBAL IGNORE RULES — Common for all environments
+# =========================================================
+
+# Node.js dependencies
 node_modules/
 **/node_modules/
 
-# Build output
+# Build outputs / compiled code
 dist/
 build/
-
-# Environment files
-.env
-**/.env
-
-# Prisma
-backend/prisma/dev.db
-backend/prisma/*.db-journal
+out/
 
 # Logs
 logs/
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Yarn
-.yarn/*
-!.yarn/releases
-!.yarn/plugins
-!.yarn/sdks
-!.yarn/versions
-.yarnrc.yml
-yarn-error.log
-
-# OS
-.DS_Store
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*.DS_Store
 Thumbs.db
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+.git_credentials
+*.pem
+*.key
+*.crt
+
+# Coverage and test reports
+coverage/
+**/coverage/
+lcov-report/
+*.lcov
+
+# Jest cache
+.jest/
+jest-cache/
+jest-stare/
+
+# TypeScript
+*.tsbuildinfo
+
+# Prisma
+prisma/migrations/dev.db-journal
+dev.db
+
+# SQLite (if used locally)
+*.sqlite
+*.sqlite-journal
+
+# Frontend build artifacts
+frontend/node_modules/
+frontend/build/
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# Backend build artifacts
+backend/node_modules/
+backend/dist/
+backend/coverage/
+backend/.env.local
+
+# Editor & OS generated files
+.vscode/
+.idea/
+*.iml
+
+# Package manager files
+pnpm-lock.yaml
+package-lock.json
+# keep yarn.lock for reproducible builds
+# (remove next line if you don't want to commit yarn.lock)
+# yarn.lock
+
+# =========================================================
+# 🧪 GIT / CI / TOOLING
+# =========================================================
+# Ignore local test reports
+test-report.xml
+
+# Ignore local coverage reports from CI
+coverage-final.json
+clover.xml
+
+# Ignore cache from tools
+.cache/
+.nyc_output/
+eslintcache/
+.prettier-cache/
