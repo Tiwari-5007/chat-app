@@ -4,6 +4,7 @@ import { Server } from 'socket.io';
 import cors from "cors";
 import dotenv from "dotenv";
 
+// Fetching the Configurations from the Env File.
 dotenv.config();
 
 // Creating a express server so that we can handle the HTTP routes:
