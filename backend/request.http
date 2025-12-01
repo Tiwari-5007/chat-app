@@ -1,0 +1,18 @@
+### User Registration
+POST http://localhost:4000/api/v1/auth/register
+Content-Type: application/json
+
+{
+    "username": "yashT007",
+    "name": "Yash Tiwari",
+    "password": "Pass@1234"
+}
+
+### User Login
+POST http://localhost:4000/api/v1/auth/login
+Content-Type: application/json
+
+{
+    "username": "yashT007",
+    "password": "Pass@1234"
+}

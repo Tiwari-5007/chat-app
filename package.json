@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "private":"true",
-  "workspaces":[
+  "private": "true",
+  "workspaces": [
     "backend",
     "frontend"
-  ]
+  ],
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.10"
+  }
 }
