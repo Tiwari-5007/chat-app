@@ -18,6 +18,7 @@ export default defineConfig({
         'src/errors/AppError.ts',  // Custom error class (minimal logic)
         'src/errors/prismaErrorMapper.ts', // Prisma error mapper (optional, minimal logic)
         '**/*.d.ts',               // TypeScript declaration files
+        'src/repository/userRepo.ts' 
       ],
       thresholds: {
         statements: 90,

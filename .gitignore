@@ -88,7 +88,7 @@ package-lock.json
 # =========================================================
 # Ignore local test reports
 test-report.xml
-
+.ssh/
 # Ignore local coverage reports from CI
 coverage-final.json
 clover.xml
