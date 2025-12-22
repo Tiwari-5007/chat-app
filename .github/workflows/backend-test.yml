@@ -7,13 +7,42 @@ on:
       - master
     paths:
       - 'backend/**'
+      - '.github/workflows/backend-test.yml'
+  push:
+    branches:
+      - master
+    paths:
+      - 'backend/**'
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    
+    # PostgreSQL service container
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpassword
+          POSTGRES_DB: chatapp_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     defaults:
       run:
         working-directory: backend
+
+    env:
+      DATABASE_URL: postgresql://testuser:testpassword@localhost:5432/chatapp_test
+      NODE_ENV: test
+      JWT_SECRET: test_jwt_secret_for_ci
+      LOG_LEVEL: error
 
     steps:
       - name: Checkout code
@@ -24,9 +53,30 @@ jobs:
         with:
           node-version: 22
           cache: 'yarn'
+          cache-dependency-path: 'backend/yarn.lock'
 
-      - name: Install dependencies
+      - name: Install dependencies (root)
+        run: yarn install --frozen-lockfile
+        working-directory: .
+
+      - name: Install dependencies (backend)
         run: yarn install --frozen-lockfile
 
-      - name: Run tests
-        run: yarn test
+      - name: Generate Prisma Client
+        run: yarn prisma:generate
+
+      - name: Run Prisma migrations
+        run: yarn prisma migrate deploy
+
+      - name: Run tests with coverage
+        run: yarn coverage
+
+      - name: Check coverage thresholds
+        run: |
+          echo "Coverage thresholds are enforced by Vitest config (90% for all metrics)"
+          if [ $? -ne 0 ]; then
+            echo "❌ Tests failed or coverage thresholds not met"
+            exit 1
+          else
+            echo "✅ All tests passed and coverage thresholds met"
+          fi
