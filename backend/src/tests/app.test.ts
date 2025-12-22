@@ -1,14 +1,17 @@
+import { describe, test, expect, afterAll } from 'vitest';
+import { createApp } from "../app";
+import { prisma } from '../lib/prisma';
 import request from 'supertest';
-import { server } from '../server';
 
-describe('Basic Server Test', () => {
-  afterAll((done) => {
-    server.close(done);
-  });
+const app = createApp();
 
-  it('should respond to GET / with a welcome message', async () => {
-    const res = await request(server).get('/');
+describe('Basic Server Test', () =>{
+  afterAll(async () => {
+    await prisma.$disconnect();
+  })
+  test('Should respond to GET /healthcheck', async () => {
+    const res = await request(app).get('/healthcheck');
     expect(res.status).toBe(200);
-    expect(res.text).toBe('Chat app backend running!');
+    expect(res.body).toEqual({ ok: true });
   });
 });
