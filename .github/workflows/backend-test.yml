@@ -53,23 +53,27 @@ jobs:
         with:
           node-version: 22
           cache: 'yarn'
-          cache-dependency-path: 'backend/yarn.lock'
+          cache-dependency-path: 'yarn.lock'
 
       - name: Install dependencies (root)
         run: yarn install --frozen-lockfile
         working-directory: .
 
-      - name: Install dependencies (backend)
-        run: yarn install --frozen-lockfile
+      # - name: Install dependencies (backend)
+      #   run: yarn install --frozen-lockfile
+      #   working-directory: backend
 
       - name: Generate Prisma Client
         run: yarn prisma:generate
+        working-directory: backend
 
       - name: Run Prisma migrations
         run: yarn prisma migrate deploy
+        working-directory: backend
 
       - name: Run tests with coverage
         run: yarn coverage
+        working-directory: backend
 
       - name: Check coverage thresholds
         run: |
